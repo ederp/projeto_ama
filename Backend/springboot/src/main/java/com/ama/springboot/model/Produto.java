@@ -6,6 +6,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import org.threeten.bp.LocalDate;
 import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.validation.Valid;
 
 /**
@@ -13,43 +17,71 @@ import javax.validation.Valid;
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-12-12T18:50:24.325627535Z[GMT]")
-
-
+@Entity
 public class Produto   {
   @JsonProperty("id")
-  private Integer id = null;
+  @Id
+  private Integer id;
 
   @JsonProperty("nome")
-  private String nome = null;
+  private String nome;
 
   @JsonProperty("ativo")
-  private Boolean ativo = null;
+  private Boolean ativo;
 
   @JsonProperty("sku")
-  private String sku = null;
+  private String sku;
 
+  @JoinColumn
   @JsonProperty("categoria")
-  private String categoria = null;
+  private Integer categoria;
 
   @JsonProperty("valorCusto")
-  private BigDecimal valorCusto = null;
+  private BigDecimal valorCusto;
 
   @JsonProperty("icms")
-  private BigDecimal icms = null;
+  private BigDecimal icms;
 
   @JsonProperty("valorVenda")
-  private BigDecimal valorVenda = null;
+  private BigDecimal valorVenda;
 
   @JsonProperty("imagem")
-  private String imagem = null;
+  private String imagem;
 
   @JsonProperty("dataCadastro")
-  private LocalDate dataCadastro = null;
+  private LocalDate dataCadastro;
 
   @JsonProperty("quantidadeEstoque")
-  private Integer quantidadeEstoque = null;
+  private Integer quantidadeEstoque;
+  
+  
 
-  public Produto id(Integer id) {
+  public Produto() {
+	super();
+	// TODO Auto-generated constructor stub
+  }
+  
+  
+
+public Produto(Integer id, String nome, Boolean ativo, String sku, Integer categoria, BigDecimal valorCusto,
+		BigDecimal icms, BigDecimal valorVenda, String imagem, LocalDate dataCadastro, Integer quantidadeEstoque) {
+	super();
+	this.id = id;
+	this.nome = nome;
+	this.ativo = ativo;
+	this.sku = sku;
+	this.categoria = categoria;
+	this.valorCusto = valorCusto;
+	this.icms = icms;
+	this.valorVenda = valorVenda;
+	this.imagem = imagem;
+	this.dataCadastro = dataCadastro;
+	this.quantidadeEstoque = quantidadeEstoque;
+}
+
+
+
+public Produto id(Integer id) {
     this.id = id;
     return this;
   }
@@ -125,7 +157,7 @@ public class Produto   {
     this.sku = sku;
   }
 
-  public Produto categoria(String categoria) {
+  public Produto categoria(Integer categoria) {
     this.categoria = categoria;
     return this;
   }
@@ -136,11 +168,11 @@ public class Produto   {
    **/
   @Schema(description = "")
   
-    public String getCategoria() {
+    public Integer getCategoria() {
     return categoria;
   }
 
-  public void setCategoria(String categoria) {
+  public void setCategoria(Integer categoria) {
     this.categoria = categoria;
   }
 

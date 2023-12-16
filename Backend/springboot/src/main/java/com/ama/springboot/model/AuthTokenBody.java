@@ -14,12 +14,19 @@ import org.springframework.validation.annotation.Validated;
 
 public class AuthTokenBody   {
   @JsonProperty("username")
-  private String username = null;
+  private String username;
 
   @JsonProperty("password")
-  private String password = null;
+  private String password;
+  
+  
+  public AuthTokenBody(String username, String password) {
+	super();
+	this.username = username;
+	this.password = password;
+}
 
-  public AuthTokenBody username(String username) {
+public AuthTokenBody username(String username) {
     this.username = username;
     return this;
   }
