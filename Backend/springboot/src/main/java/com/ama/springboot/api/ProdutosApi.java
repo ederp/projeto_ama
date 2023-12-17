@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,6 +40,7 @@ public interface ProdutosApi {
     @RequestMapping(value = "/produtos",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
+    @PreAuthorize(value = "isAuthenticated()")
     ResponseEntity<InlineResponse2001> produtosGet(@Min(1)@Parameter(in = ParameterIn.QUERY, description = "Número da página" ,schema=@Schema(allowableValues={ "1" }, minimum="1"
 )) @Valid @RequestParam(value = "page", required = false) Integer page
 , @Min(1) @Max(10) @Parameter(in = ParameterIn.QUERY, description = "Quantidade de itens por página" ,schema=@Schema(allowableValues={ "1", "10" }, minimum="1", maximum="10"
@@ -55,6 +57,7 @@ public interface ProdutosApi {
         @ApiResponse(responseCode = "404", description = "Produto não encontrado") })
     @RequestMapping(value = "/produtos/{id}",
         method = RequestMethod.DELETE)
+    @PreAuthorize(value = "isAuthenticated()")
     ResponseEntity<Void> produtosIdDelete(@Parameter(in = ParameterIn.PATH, description = "ID do produto", required=true, schema=@Schema()) @PathVariable("id") Integer id
 );
 
@@ -68,6 +71,7 @@ public interface ProdutosApi {
     @RequestMapping(value = "/produtos/{id}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
+    @PreAuthorize(value = "isAuthenticated()")
     ResponseEntity<Produto> produtosIdGet(@Parameter(in = ParameterIn.PATH, description = "ID do produto", required=true, schema=@Schema()) @PathVariable("id") Integer id
 );
 
@@ -81,6 +85,7 @@ public interface ProdutosApi {
     @RequestMapping(value = "/produtos/{id}",
         consumes = { "application/json" }, 
         method = RequestMethod.PUT)
+    @PreAuthorize(value = "isAuthenticated()")
     ResponseEntity<Void> produtosIdPut(@Parameter(in = ParameterIn.PATH, description = "ID do produto", required=true, schema=@Schema()) @PathVariable("id") Integer id
 , @Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody ProdutoUpdate body
 );
@@ -93,6 +98,7 @@ public interface ProdutosApi {
     @RequestMapping(value = "/produtos",
         consumes = { "application/json" }, 
         method = RequestMethod.POST)
+    @PreAuthorize(value = "isAuthenticated()")
     ResponseEntity<Void> produtosPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody ProdutoCreate body
 );
 

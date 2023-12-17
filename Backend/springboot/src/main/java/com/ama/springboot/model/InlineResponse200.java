@@ -14,10 +14,10 @@ import org.springframework.validation.annotation.Validated;
 
 public class InlineResponse200   {
   @JsonProperty("accessToken")
-  private String accessToken = null;
+  private String accessToken;
 
   @JsonProperty("refreshToken")
-  private String refreshToken = null;
+  private String refreshToken;
 
   public InlineResponse200 accessToken(String accessToken) {
     this.accessToken = accessToken;
