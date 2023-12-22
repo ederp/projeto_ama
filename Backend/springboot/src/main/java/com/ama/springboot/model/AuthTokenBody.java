@@ -1,7 +1,6 @@
 package com.ama.springboot.model;
 
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 
@@ -13,14 +12,16 @@ import org.springframework.validation.annotation.Validated;
 
 
 public class AuthTokenBody   {
-  @JsonProperty("username")
   private String username;
-
-  @JsonProperty("password")
   private String password;
   
   
-  public AuthTokenBody(String username, String password) {
+  public AuthTokenBody() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+
+public AuthTokenBody(String username, String password) {
 	super();
 	this.username = username;
 	this.password = password;

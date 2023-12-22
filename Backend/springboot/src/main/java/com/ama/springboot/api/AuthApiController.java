@@ -1,50 +1,64 @@
 package com.ama.springboot.api;
 
+import com.ama.springboot.configuration.JwtTokenUtil;
 import com.ama.springboot.model.AuthTokenBody;
 import com.ama.springboot.model.InlineResponse200;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ama.springboot.model.Usuario;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-12-12T18:50:24.325627535Z[GMT]")
 @RestController
 public class AuthApiController implements AuthApi {
 
     private static final Logger log = LoggerFactory.getLogger(AuthApiController.class);
-
-    private final ObjectMapper objectMapper;
-
-    private final HttpServletRequest request;
+    @Autowired
+    private final AuthenticationManager authenticationManager;
+    
+    private final JwtTokenUtil jwtTokenUtil;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public AuthApiController(ObjectMapper objectMapper, HttpServletRequest request) {
-        this.objectMapper = objectMapper;
-        this.request = request;
+    public AuthApiController(AuthenticationManager authenticationManager,
+    		JwtTokenUtil jwtTokenUtil) {
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    public ResponseEntity<InlineResponse200> authTokenPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody AuthTokenBody body
-) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<InlineResponse200>(objectMapper.readValue("{\n  \"accessToken\" : \"accessToken\",\n  \"refreshToken\" : \"refreshToken\"\n}", InlineResponse200.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<InlineResponse200>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+    public ResponseEntity authTokenPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) 
+    @Valid @RequestBody AuthTokenBody body) {
+    	try {
+            Authentication authenticate = authenticationManager
+                .authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                        body.getUsername(), body.getPassword()
+                    )
+                );
+            UserDetails user = (UserDetails) authenticate.getPrincipal();
+            String token = jwtTokenUtil.createToken(user);
+            InlineResponse200 response = new InlineResponse200(token);
+
+            return ResponseEntity.ok(response.toString());
+
+        } catch (BadCredentialsException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Acesso não autorizado. Verifique seu login e senha ou se você possui autorização para acessar esta área.");
+        } catch (Exception ex) {
+        	System.out.println(ex.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            		.body("A autenticação falhou.");
         }
-
-        return new ResponseEntity<InlineResponse200>(HttpStatus.NOT_IMPLEMENTED);
     }
-
 }

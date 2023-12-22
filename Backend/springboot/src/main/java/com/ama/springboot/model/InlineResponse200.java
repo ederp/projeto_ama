@@ -19,7 +19,17 @@ public class InlineResponse200   {
   @JsonProperty("refreshToken")
   private String refreshToken;
 
-  public InlineResponse200 accessToken(String accessToken) {
+  public InlineResponse200() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+
+public InlineResponse200(String accessToken) {
+	// TODO Auto-generated constructor stub
+	this.accessToken = accessToken;
+}
+
+public InlineResponse200 accessToken(String accessToken) {
     this.accessToken = accessToken;
     return this;
   }
@@ -79,7 +89,7 @@ public class InlineResponse200   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class InlineResponse200 {\n");
+    sb.append("{\n");
     
     sb.append("    accessToken: ").append(toIndentedString(accessToken)).append("\n");
     sb.append("    refreshToken: ").append(toIndentedString(refreshToken)).append("\n");

@@ -13,13 +13,18 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.ama.springboot.model.AuthTokenBody;
 import com.ama.springboot.model.InlineResponse200;
+import com.ama.springboot.model.Usuario;
 
 import javax.validation.Valid;
 
@@ -31,13 +36,13 @@ public interface AuthApi {
         @SecurityRequirement(name = "jwt")    }, tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "Token gerado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = InlineResponse200.class))),
-        
-        @ApiResponse(responseCode = "403", description = "A autenticação falhou. Verifique seu login e senha ou se você possui autorização para acessar esta área") })
-    @RequestMapping(value = "/auth/token",
-        produces = { "application/json" }, 
-        consumes = { "application/json" }, 
-        method = RequestMethod.POST)
-    ResponseEntity<InlineResponse200> authTokenPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody AuthTokenBody body
+        @ApiResponse(responseCode = "401", description = "Acesso não autorizado"),
+        @ApiResponse(responseCode = "400", description = "A autenticação falhou. Verifique seu login e senha ou se você possui autorização para acessar esta área") })
+    @PostMapping(value = "/auth/token",
+    	consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    ResponseEntity authTokenPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody AuthTokenBody body
 );
 
 }

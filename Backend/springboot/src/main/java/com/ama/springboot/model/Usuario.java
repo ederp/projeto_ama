@@ -1,16 +1,26 @@
 package com.ama.springboot.model;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class Usuario {
+@Table(name = "usuarios")
+public class Usuario{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7476829545833288373L;
 	@Id
 	private Integer id;
     private String username;
     private String password;
-    enum Role{
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    public enum Role{
     	ADMIN,
     	ESTOQUISTA
     }
@@ -19,11 +29,25 @@ public class Usuario {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Usuario(Integer id, String username, String password) {
+	public Usuario(Integer id, String username, String password, Role role) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
+		this.role = role;
+	}
+
+	public Usuario(String username, String password) {
+		// TODO Auto-generated constructor stub
+		this();
+    	this.username = username;
+		this.password = password;
+	}
+	
+
+	public Usuario(String username) {
+		// TODO Auto-generated constructor stub
+		this.username = username;
 	}
 
 	public Integer getId() {
@@ -49,6 +73,18 @@ public class Usuario {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	
+	public Role getRole() {
+		return role;
+	}
+
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -56,9 +92,12 @@ public class Usuario {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((role == null) ? 0 : role.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -79,6 +118,8 @@ public class Usuario {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
+		if (role != other.role)
+			return false;
 		if (username == null) {
 			if (other.username != null)
 				return false;
@@ -89,7 +130,7 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", username=" + username + ", password=" + password + "]";
+		return "Usuario [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role + "]";
 	}
-	
+
 }

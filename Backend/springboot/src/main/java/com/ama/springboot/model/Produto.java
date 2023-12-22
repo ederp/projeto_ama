@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Table;
 import javax.validation.Valid;
 
 /**
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-12-12T18:50:24.325627535Z[GMT]")
 @Entity
+@Table(name = "produtos")
 public class Produto   {
   @JsonProperty("id")
   @Id
