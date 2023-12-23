@@ -1,4 +1,4 @@
-package com.ama.springboot.configuration;
+package com.ama.springboot.service;
 
 import java.util.NoSuchElementException;
 
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ama.springboot.model.Usuario;
-import com.ama.springboot.service.UsuarioRepository;
 
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService{

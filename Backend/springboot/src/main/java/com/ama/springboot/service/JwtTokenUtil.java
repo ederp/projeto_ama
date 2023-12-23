@@ -1,4 +1,4 @@
-package com.ama.springboot.configuration;
+package com.ama.springboot.service;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -26,7 +26,7 @@ public class JwtTokenUtil implements Serializable{
 	private static final long serialVersionUID = -4945902026852767319L;
 
 	private final SecretKey secret_key = Jwts.SIG.HS256.key().build();
-	private long accessTokenValidity = 60*60*1000;
+	private long accessTokenValidity = 5*60*1000;
 
 	private final JwtParser jwtParser;
 

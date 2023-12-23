@@ -31,3 +31,12 @@ CREATE TABLE produtos (
     FOREIGN KEY (categoria_id) REFERENCES categorias(id),
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
+
+-- Tabela de Refresh Tokens
+CREATE TABLE refreshtoken(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	usuario_id INT NOT NULL,
+	token VARCHAR(255) NOT NULL,
+	expiryDate DATE NOT NULL,
+	FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);

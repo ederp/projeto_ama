@@ -23,7 +23,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ama.springboot.model.AuthTokenBody;
-import com.ama.springboot.model.InlineResponse200;
+import com.ama.springboot.model.TokenRefreshRequest;
+import com.ama.springboot.model.TokenRefreshResponse;
 import com.ama.springboot.model.Usuario;
 
 import javax.validation.Valid;
@@ -35,7 +36,7 @@ public interface AuthApi {
     @Operation(summary = "Gera um token JWT", description = "", security = {
         @SecurityRequirement(name = "jwt")    }, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Token gerado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = InlineResponse200.class))),
+        @ApiResponse(responseCode = "200", description = "Token gerado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = TokenRefreshResponse.class))),
         @ApiResponse(responseCode = "401", description = "Acesso não autorizado"),
         @ApiResponse(responseCode = "400", description = "A autenticação falhou. Verifique seu login e senha ou se você possui autorização para acessar esta área") })
     @PostMapping(value = "/auth/token",
@@ -44,6 +45,10 @@ public interface AuthApi {
     @ResponseBody
     ResponseEntity authTokenPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody AuthTokenBody body
 );
+    @Operation(summary = "Renova um token JWT expirado")
+    @ApiResponse(responseCode = "200", description = "Token renovado com sucesso")
+    @PostMapping("auth/refreshtoken")
+    public ResponseEntity refreshtoken(@Valid @RequestBody TokenRefreshRequest request);
 
 }
 

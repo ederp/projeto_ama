@@ -1,4 +1,4 @@
-package com.ama.springboot.configuration;
+package com.ama.springboot.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
