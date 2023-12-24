@@ -2,6 +2,7 @@ package com.ama.springboot.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 
@@ -98,26 +99,11 @@ public class TokenRefreshResponse   {
 		return Objects.hash(accessToken, refreshToken);
 	}
 
+
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("{\n");
-
-		sb.append("    accessToken: ").append(toIndentedString(accessToken)).append("\n");
-		sb.append("    refreshToken: ").append(toIndentedString(refreshToken)).append("\n");
-		sb.append("    tokenType: ").append(toIndentedString(tokenType)).append("\n");
-		sb.append("}");
-		return sb.toString();
+		return "{\"accessToken\":\"" + accessToken + "\",\n \"refreshToken\":\"" + refreshToken + "\",\n \"tokenType\":\""
+				+ tokenType + "\"}";
 	}
 
-	/**
-	 * Convert the given object to string with each line indented by 4 spaces
-	 * (except the first line).
-	 */
-	private String toIndentedString(java.lang.Object o) {
-		if (o == null) {
-			return "null";
-		}
-		return o.toString().replace("\n", "\n    ");
-	}
 }
