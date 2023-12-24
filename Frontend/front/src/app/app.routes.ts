@@ -5,13 +5,14 @@ import { CreateProdutoComponent } from './produtos/create-produtos/create-produt
 import { UpdateProdutoComponent } from './produtos/update-produtos/update-produtos.component';
 import { ProdutoDetailsComponent } from './produtos/produtos-details/produtos-details.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
-  { path: 'produtos', component: ProdutoListComponent },
-  { path: 'create-produto', component: CreateProdutoComponent },
+  { path: 'produtos', component: ProdutoListComponent, canActivate: [AuthGuard]},
+  { path: 'create-produto', component: CreateProdutoComponent, canActivate: [AuthGuard]},
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'update-produto/:id', component: UpdateProdutoComponent },
-  { path: 'produto-details/:id', component: ProdutoDetailsComponent },
+  { path: 'update-produto/:id', component: UpdateProdutoComponent, canActivate: [AuthGuard]},
+  { path: 'produto-details/:id', component: ProdutoDetailsComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent }
 ];
 

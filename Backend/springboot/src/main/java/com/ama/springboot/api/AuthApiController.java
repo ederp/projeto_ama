@@ -5,7 +5,6 @@ import com.ama.springboot.model.AuthTokenBody;
 import com.ama.springboot.model.RefreshToken;
 import com.ama.springboot.model.TokenRefreshRequest;
 import com.ama.springboot.model.TokenRefreshResponse;
-import com.ama.springboot.model.Usuario;
 import com.ama.springboot.service.JwtTokenUtil;
 import com.ama.springboot.service.RefreshTokenService;
 

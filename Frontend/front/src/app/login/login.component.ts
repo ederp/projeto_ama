@@ -1,25 +1,22 @@
 import { NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgIf, HttpClientModule],
+  imports: [FormsModule, ReactiveFormsModule, NgIf],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
+
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   mensagem!: string;
-
-  accessToken!: string;
-  refreshToken!: string;
-  tokenType!: string;
-
-  constructor(private http: HttpClient, private router: Router) { }
+  
+  constructor(private router: Router, private auth: AuthService) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -29,18 +26,11 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.http.post<any>("http://localhost:8080/auth/token", this.loginForm.value)
-      .subscribe((data) => {
-        //accessToken: data.accessToken;
-        //refreshToken: data.refreshToken;
-        //tokenType: data.tokenType;
-        this.mensagem = "Login feito com sucesso!";
-        this.loginForm.reset;
-        this.router.navigate(['produtos']);
-      },
-        (error) => {
-          //console.log(error);
-          this.mensagem = "E-mail ou a senha está errado!";
-      });
+    const loginSuccess = this.auth.login(this.loginForm.value);
+    this.mensagem = loginSuccess ? "Login feito com sucesso!" : "E-mail ou a senha está errado!";
+    if (loginSuccess) {
+      this.loginForm.reset;
+      this.router.navigate(['produtos']);
+    }
   }
 }
