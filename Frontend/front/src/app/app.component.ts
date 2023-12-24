@@ -7,8 +7,8 @@ import { LoginComponent } from './login/login.component';
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, RouterOutlet, LoginComponent],
-  template: `<app-login></app-login>`,
-  styleUrl: './app.component.css'
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'front';

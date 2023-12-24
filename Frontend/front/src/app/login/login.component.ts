@@ -2,6 +2,7 @@ import { NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   refreshToken!: string;
   tokenType!: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -35,6 +36,7 @@ export class LoginComponent implements OnInit {
         //tokenType: data.tokenType;
         this.mensagem = "Login feito com sucesso!";
         this.loginForm.reset;
+        this.router.navigate(['produtos']);
       },
         (error) => {
           //console.log(error);
