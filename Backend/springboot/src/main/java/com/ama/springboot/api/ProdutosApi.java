@@ -21,10 +21,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.ama.springboot.model.InlineResponse2001;
 import com.ama.springboot.model.Produto;
 import com.ama.springboot.model.ProdutoCreate;
 import com.ama.springboot.model.ProdutoUpdate;
+
+import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -36,29 +37,23 @@ public interface ProdutosApi {
     @Operation(summary = "Lista produtos com paginação, ordenação e filtros", description = "", security = {
         @SecurityRequirement(name = "jwt")    }, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Lista de produtos paginada", content = @Content(mediaType = "application/json", schema = @Schema(implementation = InlineResponse2001.class))) })
+        @ApiResponse(responseCode = "200", description = "Lista de produtos", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Produto.class))) })
     @RequestMapping(value = "/produtos",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     @PreAuthorize(value = "isAuthenticated()")
-    ResponseEntity<InlineResponse2001> produtosGet(@Min(1)@Parameter(in = ParameterIn.QUERY, description = "Número da página" ,schema=@Schema(allowableValues={ "1" }, minimum="1"
-)) @Valid @RequestParam(value = "page", required = false) Integer page
-, @Min(1) @Max(10) @Parameter(in = ParameterIn.QUERY, description = "Quantidade de itens por página" ,schema=@Schema(allowableValues={ "1", "10" }, minimum="1", maximum="10"
-)) @Valid @RequestParam(value = "size", required = false) Integer size
-, @Parameter(in = ParameterIn.QUERY, description = "Ordenação (ex:+nome, -categoria)" ,schema=@Schema()) @Valid @RequestParam(value = "sort", required = false) String sort
-);
+    ResponseEntity<?> produtosGet();
 
 
     @Operation(summary = "Exclui um produto por ID", description = "", security = {
         @SecurityRequirement(name = "jwt")    }, tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "204", description = "Produto excluído com sucesso"),
-        
         @ApiResponse(responseCode = "404", description = "Produto não encontrado") })
     @RequestMapping(value = "/produtos/{id}",
         method = RequestMethod.DELETE)
     @PreAuthorize(value = "isAuthenticated()")
-    ResponseEntity<Void> produtosIdDelete(@Parameter(in = ParameterIn.PATH, description = "ID do produto", required=true, schema=@Schema()) @PathVariable("id") Integer id
+    ResponseEntity<?> produtosIdDelete(@Parameter(in = ParameterIn.PATH, description = "ID do produto", required=true, schema=@Schema()) @PathVariable("id") Integer id
 );
 
 
@@ -72,7 +67,7 @@ public interface ProdutosApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     @PreAuthorize(value = "isAuthenticated()")
-    ResponseEntity<Produto> produtosIdGet(@Parameter(in = ParameterIn.PATH, description = "ID do produto", required=true, schema=@Schema()) @PathVariable("id") Integer id
+    ResponseEntity<?> produtosIdGet(@Parameter(in = ParameterIn.PATH, description = "ID do produto", required=true, schema=@Schema()) @PathVariable("id") Integer id
 );
 
 
@@ -86,7 +81,7 @@ public interface ProdutosApi {
         consumes = { "application/json" }, 
         method = RequestMethod.PUT)
     @PreAuthorize(value = "isAuthenticated()")
-    ResponseEntity<Void> produtosIdPut(@Parameter(in = ParameterIn.PATH, description = "ID do produto", required=true, schema=@Schema()) @PathVariable("id") Integer id
+    ResponseEntity<?> produtosIdPut(@Parameter(in = ParameterIn.PATH, description = "ID do produto", required=true, schema=@Schema()) @PathVariable("id") Integer id
 , @Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody ProdutoUpdate body
 );
 
@@ -99,7 +94,7 @@ public interface ProdutosApi {
         consumes = { "application/json" }, 
         method = RequestMethod.POST)
     @PreAuthorize(value = "isAuthenticated()")
-    ResponseEntity<Void> produtosPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody ProdutoCreate body
+    ResponseEntity<?> produtosPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody ProdutoCreate body
 );
 
 }

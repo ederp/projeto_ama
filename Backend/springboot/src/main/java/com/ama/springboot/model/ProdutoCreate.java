@@ -25,7 +25,7 @@ public class ProdutoCreate   {
   private String sku = null;
 
   @JsonProperty("categoria")
-  private String categoria = null;
+  private Integer categoria = null;
 
   @JsonProperty("valorCusto")
   private BigDecimal valorCusto = null;
@@ -99,7 +99,7 @@ public class ProdutoCreate   {
     this.sku = sku;
   }
 
-  public ProdutoCreate categoria(String categoria) {
+  public ProdutoCreate categoria(Integer categoria) {
     this.categoria = categoria;
     return this;
   }
@@ -110,11 +110,11 @@ public class ProdutoCreate   {
    **/
   @Schema(description = "")
   
-    public String getCategoria() {
+    public Integer getCategoria() {
     return categoria;
   }
 
-  public void setCategoria(String categoria) {
+  public void setCategoria(Integer categoria) {
     this.categoria = categoria;
   }
 

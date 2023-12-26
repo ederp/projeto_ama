@@ -4,13 +4,11 @@
     "\\front",
     "\\front\\src",
     "\\front\\src\\app",
+    "\\front\\src\\app\\auth",
     "\\front\\src\\app\\login",
     "\\front\\src\\app\\produtos",
-    "\\front\\src\\app\\produtos\\create-produtos",
-    "\\front\\src\\app\\produtos\\produtos-details",
-    "\\front\\src\\app\\produtos\\produtos-list",
-    "\\front\\src\\app\\produtos\\update-produtos"
+    "\\front\\src\\app\\produtos\\produtos-list"
   ],
-  "SelectedNode": "\\front\\src\\app\\app.routes.ts",
+  "SelectedNode": "\\front\\src\\app\\app.config.ts",
   "PreviewInSolutionExplorer": false
 }
